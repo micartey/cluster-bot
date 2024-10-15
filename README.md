@@ -45,7 +45,7 @@ end
 
 ## Getting Started
 
-The [ClusterMonitor](https://hexdocs.pm/cluster_bot/doc/ClusterMonitor.html) implements the GenServer behavior and is thus usable with a standard OTP supervision tree.
+The [ClusterMonitor](https://hexdocs.pm/cluster_bot/ClusterMonitor.html) implements the GenServer behavior and is thus usable with a standard OTP supervision tree.
 
 ```ex
 children = [
@@ -67,7 +67,7 @@ config :cluster_bot,
   fetch_interval: 5_000,
   reconnect_interval: 5_000, 
   refresh_interval: 60_000,
-  output: "cache.bin",
+  output: "cache.bin"
 ```
 
 The library is meant to be passively used thus doesn't need to be interacted with.
