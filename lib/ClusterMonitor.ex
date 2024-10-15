@@ -43,7 +43,7 @@ defmodule ClusterMonitor do
       |> Enum.filter(fn node -> !Enum.member?(state, node) end)
 
     if length(new_nodes) > 0 do
-      Logger.debug(~s(New nodes connected: #{inspect(new_nodes)}))
+      Logger.info(~s(New nodes connected: #{inspect(new_nodes)}))
 
       # Store new nodes to cache
       new_nodes
@@ -63,26 +63,27 @@ defmodule ClusterMonitor do
       state
       |> Enum.filter(fn node -> !Enum.member?(Node.list(), node) end)
 
-    # Check if any known nodes are missing
+    # Check if any nodes are missing (disconnected)
     if length(missing_nodes) > 0 do
-        Logger.debug(~s(Nodes missing: #{inspect(missing_nodes)}))
-
-      # Reconnect to nodes
-      missing_nodes
-      |> Enum.each(fn node ->
-        Logger.info(~s(Connecting to node: #{inspect(node)}))
-
-        Node.connect(node)
-      end)
+      Logger.info(~s(Nodes missing: #{inspect(missing_nodes)}... Reconnecting))
     end
 
-    {:noreply, state}
+    # Filter known nodes for nodes that are disconnected and try to reconnect
+    get_nodes()
+    |> Enum.filter(fn node -> !Enum.member?(Node.list(), node) end)
+    |> Enum.each(fn node ->
+      Logger.debug(~s(Connecting to node: #{inspect(node)}))
+
+      Node.connect(node)
+    end)
+
+    {:noreply, Node.list()}
   end
 
   def handle_info(:refresh, state) do
     Node.list()
     |> Enum.each(fn node ->
-        Cachex.refresh(@cache, "#{node}")
+      Cachex.refresh(@cache, "#{node}")
     end)
 
     {:noreply, state}
