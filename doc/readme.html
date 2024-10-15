@@ -14,7 +14,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-6BF2BE1D.js"></script>
+    <script src="dist/sidebar_items-F6B09DDF.js"></script>
     <script src="docs_config.js"></script>
     <script async src="dist/html-YIPIRHGU.js"></script>
 
@@ -121,20 +121,57 @@ Pages
     <span>Cluster-Bot</span>
   </h1>
 
-<h2 id="installation" class="section-heading">
+<div align="center">  <a href="https://elixir-lang.org/">
+    <img
+      src="https://img.shields.io/badge/Written%20in-elixir-%237C6D91?style=for-the-badge"
+      height="30"
+    />
+  </a>
+  <a href="https://hex.pm/cluster_bot">
+    <img
+      src="https://img.shields.io/badge/hex.pm-cluster_bot-%23333333?style=for-the-badge"
+      height="30"
+    />
+  </a></div><br/><p align="center">  <a href="#introduction">Introduction</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#getting-started">Getting Started</a></p><h2 id="introduction" class="section-heading">
+  <a href="#introduction" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Introduction</span>
+</h2>
+<p><code class="inline">ClusterBot</code> is a small elixir library to manage nodes and automatically reconnect if a node disconnects thus trying to maintain a constant pool of nodes.
+Nodes are cached using <a href="https://hexdocs.pm/cachex/Cachex.html">Cachex</a> and stored to the file system.
+If a node is not reachable in 24 hours, it will permamently be removed from the cache.</p><h2 id="installation" class="section-heading">
   <a href="#installation" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
   <span class="text">Installation</span>
 </h2>
-<p>If <a href="https://hex.pm/docs/publish">available in Hex</a>, the package can be installed
-by adding <code class="inline">cluster_bot</code> to your list of dependencies in <code class="inline">mix.exs</code>:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="1337676600-1">do</span><span class="w">
-  </span><span class="p" data-group-id="1337676600-2">[</span><span class="w">
-    </span><span class="p" data-group-id="1337676600-3">{</span><span class="ss">:cluster_bot</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.1.0&quot;</span><span class="p" data-group-id="1337676600-3">}</span><span class="w">
-  </span><span class="p" data-group-id="1337676600-2">]</span><span class="w">
-</span><span class="k" data-group-id="1337676600-1">end</span></code></pre><p>Documentation can be generated with <a href="https://github.com/elixir-lang/ex_doc">ExDoc</a>
-and published on <a href="https://hexdocs.pm">HexDocs</a>. Once published, the docs can
-be found at <a href="https://hexdocs.pm/cluster_bot">https://hexdocs.pm/cluster_bot</a>.</p>
+<!-- https://hex.pm/docs/publish --><p>Add <code class="inline">cluster_bot</code> to your list of dependencies in <code class="inline">mix.exs</code>:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="3514120785-1">do</span><span class="w">
+  </span><span class="p" data-group-id="3514120785-2">[</span><span class="w">
+    </span><span class="p" data-group-id="3514120785-3">{</span><span class="ss">:cluster_bot</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.1.0&quot;</span><span class="p" data-group-id="3514120785-3">}</span><span class="w">
+  </span><span class="p" data-group-id="3514120785-2">]</span><span class="w">
+</span><span class="k" data-group-id="3514120785-1">end</span></code></pre><h2 id="getting-started" class="section-heading">
+  <a href="#getting-started" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Getting Started</span>
+</h2>
+<p>The <a href="https://hexdocs.pm/cluster_bot/doc/ClusterMonitor.html">ClusterMonitor</a> implements the GenServer behavior and is thus usable with a standard OTP supervision tree.</p><pre><code class="ex">children = [
+  ClusterMonitor,
+  ...
+]
+
+Supervisor.start_link(children, [
+  strategy: :one_for_one,
+  name: Your.Supervisor
+])</code></pre><p>You are also able to change some parameters in you config.
+This is purly optional and mainly involves interval times:</p><pre><code class="ex">config :cluster_bot,
+  fetch_interval: 5_000,
+  reconnect_interval: 5_000, 
+  refresh_interval: 60_000,
+  output: &quot;cache.bin&quot;,</code></pre><p>The library is meant to be passively used thus does't need to be interacted with.</p>
 </div>
 
 <div class="bottom-actions" id="bottom-actions">
