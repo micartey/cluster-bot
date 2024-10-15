@@ -70,4 +70,4 @@ config :cluster_bot,
   output: "cache.bin",
 ```
 
-The library is meant to be passively used thus does't need to be interacted with.
+The library is meant to be passively used thus doesn't need to be interacted with.
