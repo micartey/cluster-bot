@@ -15,8 +15,8 @@ defmodule ClusterBot.MixProject do
       name: "ClusterBot",
       source_url: "https://github.com/micartey/cluster-bot",
       docs: [
-        main: "readme.html",
-        extras: ["README.md"]
+        main: "readme",
+        extras: ["README.md", "LICENSE"]
       ]
     ]
   end

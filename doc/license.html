@@ -8,7 +8,7 @@
     <meta name="project" content="ClusterBot v0.1.0">
 
 
-    <title>Cluster-Bot — ClusterBot v0.1.0</title>
+    <title>LICENSE — ClusterBot v0.1.0</title>
     <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
 
@@ -112,91 +112,53 @@ Pages
 <div id="top-content">
   <h1>
 
-      <a href="https://github.com/micartey/cluster-bot/blob/main/README.md#L1" title="View Source" class="icon-action" rel="help">
+      <a href="https://github.com/micartey/cluster-bot/blob/main/LICENSE#L1" title="View Source" class="icon-action" rel="help">
         <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         <span class="sr-only">View Source</span>
       </a>
 
 
-    <span>Cluster-Bot</span>
+    <span>LICENSE</span>
   </h1>
 
-<div align="center">  <a href="https://elixir-lang.org/">
-    <img
-      src="https://img.shields.io/badge/Written%20in-elixir-%237C6D91?style=for-the-badge"
-      height="30"
-    />
-  </a>
-  <a href="https://hex.pm/packages/cluster_bot">
-    <img
-      src="https://img.shields.io/badge/hex.pm-cluster_bot-%23333333?style=for-the-badge"
-      height="30"
-    />
-  </a></div><br/><p align="center">  <a href="#introduction">Introduction</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#getting-started">Getting Started</a></p><h2 id="introduction" class="section-heading">
-  <a href="#introduction" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Introduction</span>
-</h2>
-<p><code class="inline">ClusterBot</code> is a small elixir library to manage nodes and automatically reconnect if a node disconnects thus trying to maintain a constant pool of nodes.
-Nodes are cached using <a href="https://hexdocs.pm/cachex/Cachex.html">Cachex</a> and stored to the file system.
-If a node is not reachable in 24 hours, it will permamently be removed from the cache.</p><h2 id="installation" class="section-heading">
-  <a href="#installation" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Installation</span>
-</h2>
-<!-- https://hex.pm/docs/publish --><p>Add <code class="inline">cluster_bot</code> to your list of dependencies in <code class="inline">mix.exs</code>:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="3249840200-1">do</span><span class="w">
-  </span><span class="p" data-group-id="3249840200-2">[</span><span class="w">
-    </span><span class="p" data-group-id="3249840200-3">{</span><span class="ss">:cluster_bot</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.1.0&quot;</span><span class="p" data-group-id="3249840200-3">}</span><span class="w">
-  </span><span class="p" data-group-id="3249840200-2">]</span><span class="w">
-</span><span class="k" data-group-id="3249840200-1">end</span></code></pre><h2 id="getting-started" class="section-heading">
-  <a href="#getting-started" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Getting Started</span>
-</h2>
-<p>The <a href="https://hexdocs.pm/cluster_bot/doc/ClusterMonitor.html">ClusterMonitor</a> implements the GenServer behavior and is thus usable with a standard OTP supervision tree.</p><pre><code class="ex">children = [
-  ClusterMonitor,
-  ...
-]
+<pre>
+MIT License
 
-Supervisor.start_link(children, [
-  strategy: :one_for_one,
-  name: Your.Supervisor
-])</code></pre><p>You are also able to change some parameters in you config.
-This is purly optional and mainly involves interval times:</p><pre><code class="ex">config :cluster_bot,
-  fetch_interval: 5_000,
-  reconnect_interval: 5_000, 
-  refresh_interval: 60_000,
-  output: &quot;cache.bin&quot;,</code></pre><p>The library is meant to be passively used thus doesn't need to be interacted with.</p>
+Copyright (c) 2024 micartey
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</pre>
 </div>
 
 <div class="bottom-actions" id="bottom-actions">
   <div class="bottom-actions-item">
 
-      <a href="api-reference.html" class="bottom-actions-button" rel="prev">
+      <a href="readme.html" class="bottom-actions-button" rel="prev">
         <span class="subheader">
           ← Previous Page
         </span>
         <span class="title">
-API Reference
+Cluster-Bot
         </span>
       </a>
 
   </div>
   <div class="bottom-actions-item">
-
-      <a href="license.html" class="bottom-actions-button" rel="next">
-        <span class="subheader">
-          Next Page →
-        </span>
-        <span class="title">
-LICENSE
-        </span>
-      </a>
 
   </div>
 </div>
@@ -208,7 +170,7 @@ LICENSE
 
             <a href="https://preview.hex.pm/preview/cluster_bot/0.1.0">Hex Preview</a>
 
-              (<a href="https://preview.hex.pm/preview/cluster_bot/0.1.0/show/README.md">current file</a>)
+              (<a href="https://preview.hex.pm/preview/cluster_bot/0.1.0/show/LICENSE">current file</a>)
 
           </span>
 
