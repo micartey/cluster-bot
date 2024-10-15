@@ -7,7 +7,7 @@
       height="30"
     />
   </a>
-  <a href="https://hex.pm/cluster_bot">
+  <a href="https://hex.pm/packages/cluster_bot">
     <img
       src="https://img.shields.io/badge/hex.pm-cluster_bot-%23333333?style=for-the-badge"
       height="30"
