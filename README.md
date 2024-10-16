@@ -63,6 +63,8 @@ You are also able to change some parameters in you config.
 This is purly optional and mainly involves interval times:
 
 ```ex
+config :logger, ClusterMonitor, level: :error # To prevent logging
+
 config :cluster_bot,
   fetch_interval: 5_000,
   reconnect_interval: 5_000, 
@@ -70,4 +72,4 @@ config :cluster_bot,
   output: "cache.bin"
 ```
 
-The library is meant to be passively used thus doesn't need to be interacted with.
+The library doesn't have any interfaces, as it serves as a watchdog.

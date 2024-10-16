@@ -8,7 +8,7 @@ defmodule ClusterMonitor do
   @refresh_interval Application.compile_env(:cluster_bot, :refresh_interval, 60 * 1000)
 
   # Cachex configuration
-  @output Application.compile_env(:cluster_bot, :output, "clusterbot.cache")
+  @output Application.compile_env(:cluster_bot, :output, ".clusterbot.cache")
   @cache Application.compile_env(:cluster_bot, :cache, :cluster_bot)
 
   @moduledoc """
@@ -65,7 +65,7 @@ defmodule ClusterMonitor do
 
     # Check if any nodes are missing (disconnected)
     if length(missing_nodes) > 0 do
-      Logger.info(~s(Nodes missing: #{inspect(missing_nodes)}... Reconnecting))
+      Logger.notice(~s(Nodes disconnected: #{inspect(missing_nodes)}))
     end
 
     # Filter known nodes for nodes that are disconnected and try to reconnect

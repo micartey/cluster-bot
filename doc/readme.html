@@ -5,10 +5,10 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.34.2">
-    <meta name="project" content="ClusterBot v0.1.0">
+    <meta name="project" content="ClusterBot v0.1.1">
 
 
-    <title>Cluster-Bot — ClusterBot v0.1.0</title>
+    <title>Cluster-Bot — ClusterBot v0.1.1</title>
     <link rel="stylesheet" href="dist/html-elixir-F2VRIOKR.css" />
 
 
@@ -50,7 +50,7 @@
 ClusterBot
         </a>
         <div class="sidebar-projectVersion" translate="no">
-          v0.1.0
+          v0.1.1
         </div>
       </div>
     </div>
@@ -148,17 +148,17 @@ If a node is not reachable in 24 hours, it will permamently be removed from the 
   </a>
   <span class="text">Installation</span>
 </h2>
-<!-- https://hex.pm/docs/publish --><p>Add <code class="inline">cluster_bot</code> to your list of dependencies in <code class="inline">mix.exs</code>:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="3249840200-1">do</span><span class="w">
-  </span><span class="p" data-group-id="3249840200-2">[</span><span class="w">
-    </span><span class="p" data-group-id="3249840200-3">{</span><span class="ss">:cluster_bot</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.1.0&quot;</span><span class="p" data-group-id="3249840200-3">}</span><span class="w">
-  </span><span class="p" data-group-id="3249840200-2">]</span><span class="w">
-</span><span class="k" data-group-id="3249840200-1">end</span></code></pre><h2 id="getting-started" class="section-heading">
+<!-- https://hex.pm/docs/publish --><p>Add <code class="inline">cluster_bot</code> to your list of dependencies in <code class="inline">mix.exs</code>:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="9800450886-1">do</span><span class="w">
+  </span><span class="p" data-group-id="9800450886-2">[</span><span class="w">
+    </span><span class="p" data-group-id="9800450886-3">{</span><span class="ss">:cluster_bot</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.1.0&quot;</span><span class="p" data-group-id="9800450886-3">}</span><span class="w">
+  </span><span class="p" data-group-id="9800450886-2">]</span><span class="w">
+</span><span class="k" data-group-id="9800450886-1">end</span></code></pre><h2 id="getting-started" class="section-heading">
   <a href="#getting-started" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
   <span class="text">Getting Started</span>
 </h2>
-<p>The <a href="https://hexdocs.pm/cluster_bot/doc/ClusterMonitor.html">ClusterMonitor</a> implements the GenServer behavior and is thus usable with a standard OTP supervision tree.</p><pre><code class="ex">children = [
+<p>The <a href="https://hexdocs.pm/cluster_bot/ClusterMonitor.html">ClusterMonitor</a> implements the GenServer behavior and is thus usable with a standard OTP supervision tree.</p><pre><code class="ex">children = [
   ClusterMonitor,
   ...
 ]
@@ -167,11 +167,13 @@ Supervisor.start_link(children, [
   strategy: :one_for_one,
   name: Your.Supervisor
 ])</code></pre><p>You are also able to change some parameters in you config.
-This is purly optional and mainly involves interval times:</p><pre><code class="ex">config :cluster_bot,
+This is purly optional and mainly involves interval times:</p><pre><code class="ex">config :logger, ClusterMonitor, level: :error # To prevent logging
+
+config :cluster_bot,
   fetch_interval: 5_000,
   reconnect_interval: 5_000, 
   refresh_interval: 60_000,
-  output: &quot;cache.bin&quot;,</code></pre><p>The library is meant to be passively used thus doesn't need to be interacted with.</p>
+  output: &quot;cache.bin&quot;</code></pre><p>The library doesn't have any interfaces, as it serves as a watchdog.</p>
 </div>
 
 <div class="bottom-actions" id="bottom-actions">
@@ -204,11 +206,11 @@ LICENSE
       <p>
 
           <span class="line">
-            <a href="https://hex.pm/packages/cluster_bot/0.1.0" class="footer-hex-package">Hex Package</a>
+            <a href="https://hex.pm/packages/cluster_bot/0.1.1" class="footer-hex-package">Hex Package</a>
 
-            <a href="https://preview.hex.pm/preview/cluster_bot/0.1.0">Hex Preview</a>
+            <a href="https://preview.hex.pm/preview/cluster_bot/0.1.1">Hex Preview</a>
 
-              (<a href="https://preview.hex.pm/preview/cluster_bot/0.1.0/show/README.md">current file</a>)
+              (<a href="https://preview.hex.pm/preview/cluster_bot/0.1.1/show/README.md">current file</a>)
 
           </span>
 
