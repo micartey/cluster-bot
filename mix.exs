@@ -4,7 +4,7 @@ defmodule ClusterBot.MixProject do
   def project do
     [
       app: :cluster_bot,
-      version: "0.1.1",
+      version: "0.1.2",
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -16,6 +16,7 @@ defmodule ClusterBot.MixProject do
       source_url: "https://github.com/micartey/cluster-bot",
       docs: [
         main: "readme",
+        source_ref: "master",
         extras: ["README.md", "LICENSE"]
       ]
     ]

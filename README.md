@@ -38,7 +38,7 @@ Add `cluster_bot` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:cluster_bot, "~> 0.1.0"}
+    {:cluster_bot, "~> 0.1.2"}
   ]
 end
 ```

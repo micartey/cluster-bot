@@ -19,7 +19,7 @@ defmodule ClusterMonitor do
   - refresh cache for connected nodes
 
   All features are mandatory and cannot be disabled.
-  The only option one whould have, is increasing the interval timers to such a hight amount, that an exection is impossible.
+  The only option one whould have, is increasing the interval timers to such an amount, that an exection is impossible.
   """
 
   def start_link(opts \\ []) do
