@@ -47,7 +47,7 @@ end
 
 The [ClusterMonitor](https://hexdocs.pm/cluster_bot/ClusterMonitor.html) implements the GenServer behavior and is thus usable with a standard OTP supervision tree.
 
-```ex
+```elixir
 children = [
   ClusterMonitor,
   ...
@@ -62,7 +62,7 @@ Supervisor.start_link(children, [
 You are also able to change some parameters in you config.
 This is purly optional and mainly involves interval times:
 
-```ex
+```elixir
 config :cluster_bot,
   fetch_interval: 5_000,
   reconnect_interval: 5_000, 
@@ -75,6 +75,6 @@ config :cluster_bot,
 In some cases it might be necessary to get the oldest node as it often holds the most amount of data.
 ClusterMonitor provides a function to get the oldest node.
 
-```ex
+```elixir
 node = ClusterMonitor.oldest_node() # or nil if current node is oldest node
 ```
