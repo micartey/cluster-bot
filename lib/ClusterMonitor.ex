@@ -2,6 +2,8 @@ defmodule ClusterMonitor do
   require Logger
   use GenServer
 
+  defstruct nodes: [], lifetime: 0
+
   # Timer configuration
   @fetch_interval Application.compile_env(:cluster_bot, :fetch_interval, 5 * 1000)
   @reconnect_interval Application.compile_env(:cluster_bot, :reconnect_interval, 5 * 1000)
@@ -26,21 +28,26 @@ defmodule ClusterMonitor do
     Cachex.start_link(@cache)
     Cachex.restore(@cache, @output)
 
-    GenServer.start_link(__MODULE__, get_nodes(), opts)
+    GenServer.start_link(__MODULE__, nil, name: :cluster_monitor)
   end
 
-  def init(state) do
+  def init(_) do
     :timer.send_interval(@fetch_interval, :collect)
     :timer.send_interval(@reconnect_interval, :reconnect)
     :timer.send_interval(@refresh_interval, :refresh)
 
-    {:ok, state}
+    {:ok,
+      %ClusterMonitor{
+        nodes: get_nodes(),
+        lifetime: :os.system_time(:millisecond)
+      }
+    }
   end
 
-  def handle_info(:collect, state) do
+  def handle_info(:collect, %ClusterMonitor{nodes: nodes} = state) do
     new_nodes =
       Node.list()
-      |> Enum.filter(fn node -> !Enum.member?(state, node) end)
+      |> Enum.filter(fn node -> !Enum.member?(nodes, node) end)
 
     if length(new_nodes) > 0 do
       Logger.info(~s(New nodes connected: #{inspect(new_nodes)}))
@@ -55,12 +62,12 @@ defmodule ClusterMonitor do
       Cachex.save(@cache, @output)
     end
 
-    {:noreply, state ++ new_nodes}
+    {:noreply, %ClusterMonitor{state | nodes: nodes ++ new_nodes}}
   end
 
-  def handle_info(:reconnect, state) do
+  def handle_info(:reconnect, %ClusterMonitor{nodes: nodes} = state) do
     missing_nodes =
-      state
+      nodes
       |> Enum.filter(fn node -> !Enum.member?(Node.list(), node) end)
 
     # Check if any nodes are missing (disconnected)
@@ -77,16 +84,40 @@ defmodule ClusterMonitor do
       Node.connect(node)
     end)
 
-    {:noreply, Node.list()}
+    {:noreply, %ClusterMonitor{state | nodes: Node.list()}}
   end
 
-  def handle_info(:refresh, state) do
+  def handle_info(:refresh, %ClusterMonitor{} = state) do
     Node.list()
     |> Enum.each(fn node ->
       Cachex.refresh(@cache, "#{node}")
     end)
 
     {:noreply, state}
+  end
+
+  def handle_call(:lifetime, _caller_pid, %ClusterMonitor{lifetime: lifetime} = state) do
+    {:reply, lifetime, state}
+  end
+
+  # {_, pid} = ClusterMonitor.start_link()
+  # GenServer.call(pid, :oldest_node)
+  def handle_call(:oldest_node, _caller_pid, %ClusterMonitor{lifetime: lifetime} = state) do
+    {node, node_lifetime} = Node.list()
+    |> Stream.map(fn node ->
+      pid = :rpc.call(node, Process, :whereis, [:cluster_monitor])
+      lifetime = :rpc.call(node, GenServer, :call, [pid, :lifetime])
+
+      {node, lifetime}
+    end)
+    |> Enum.sort_by(fn {_node, lifetime} -> lifetime end)
+    |> List.first()
+
+    if node && lifetime < node_lifetime do
+      {:reply, node(), state}
+    else
+      {:reply, node, state}
+    end
   end
 
   defp get_nodes() do
