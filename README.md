@@ -38,7 +38,7 @@ Add `cluster_bot` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:cluster_bot, "~> 0.1.2"}
+    {:cluster_bot, "~> 0.2.0"}
   ]
 end
 ```
@@ -63,8 +63,6 @@ You are also able to change some parameters in you config.
 This is purly optional and mainly involves interval times:
 
 ```ex
-config :logger, ClusterMonitor, level: :error # To prevent logging
-
 config :cluster_bot,
   fetch_interval: 5_000,
   reconnect_interval: 5_000, 
@@ -72,4 +70,11 @@ config :cluster_bot,
   output: "cache.bin"
 ```
 
-The library doesn't have any interfaces, as it serves as a watchdog.
+### Get oldest Node
+
+In some cases it might be necessary to get the oldest node as it often holds the most amount of data.
+ClusterMonitor provides a function to get the oldest node.
+
+```ex
+node = ClusterMonitor.oldest_node() # or nil if current node is oldest node
+```

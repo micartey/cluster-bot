@@ -4,7 +4,7 @@ defmodule ClusterBot.MixProject do
   def project do
     [
       app: :cluster_bot,
-      version: "0.1.2",
+      version: "0.2.0",
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       description: description(),

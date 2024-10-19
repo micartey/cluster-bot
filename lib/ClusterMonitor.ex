@@ -111,13 +111,17 @@ defmodule ClusterMonitor do
       {node, lifetime}
     end)
     |> Enum.sort_by(fn {_node, lifetime} -> lifetime end)
-    |> List.first()
+    |> List.first({nil, nil})
 
     if node && lifetime < node_lifetime do
-      {:reply, node(), state}
+      {:reply, nil, state}
     else
       {:reply, node, state}
     end
+  end
+
+  def oldest_node() do
+    GenServer.call(Process.whereis(:cluster_monitor), :oldest_node)
   end
 
   defp get_nodes() do
